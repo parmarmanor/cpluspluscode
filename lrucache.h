@@ -2,9 +2,17 @@
 
 struct Node
 {
-    int value;
-    Node* next;
-    Node* prev;
+    int     value;
+    Node*   next;
+    Node*   prev;
+};
+
+struct lruqueue
+{
+    int     mTotalCacheSize;
+    int     mCurrentCacheSize;
+    Node*   mQueueFront;
+    Node*   mQueueRear;
 };
 
 class LRUCache
@@ -13,8 +21,17 @@ class LRUCache
     LRUCache(int cacheSize);
     ~LRUCache();
 
+    Node*   findInCache(int pageId);
+    Node*   addInCache(int pageId);
+    void    removeRearFromCache();
+    void    moveToFrontofQueue(Node* node);
+    bool    isCacheFull();
+
+    void    printCache();
+
   private:
     map<int, Node*>     mPageIdtoNodeMap;
-    int                 mTotalCacheSize;
-    int                 mCurrentCacheSize;
+
+    lruqueue*           mLruQueue;
+
 };
